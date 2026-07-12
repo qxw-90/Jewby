@@ -1,7 +1,20 @@
 # GSByTikTok
-# Terms of Service
-This project uses TikTok’s API to share videos that highlight thoughtfully designed products, then gathers audience feedback on what resonates. Our focus is on everyday items inspired by traditional Chinese culture—such as Chinese-style phone cases and pet accessories made with Zhuang brocade—bringing cultural craftsmanship into modern life in a way that’s easy to discover and enjoy.
 
+Desktop tool that uses TikTok’s official APIs to share thoughtfully designed product videos—especially everyday items inspired by traditional Chinese culture, such as Chinese-style phone cases and Zhuang brocade pet accessories—then helps review publishing results and audience feedback.
 
-# Privacy Policy
-We only collect the regional location of users who comment on our published videos, solely for the purpose of analyzing product feedback related to those videos. No other personal or private user information is collected.
+## How it works
+
+1. Sign in with TikTok (Login Kit)
+2. Select videos from a local folder
+3. Publish via Content Posting API
+4. Check publish status and view results in the app
+
+## Legal pages (GitHub Pages)
+
+After GitHub Pages is enabled, use these URLs in the TikTok Developer Portal:
+
+- Home: https://qxw-90.github.io/GSByTikTok/
+- Terms of Service: https://qxw-90.github.io/GSByTikTok/terms.html
+- Privacy Policy: https://qxw-90.github.io/GSByTikTok/privacy.html
+
+Source files live in the [`docs/`](./docs/) folder.
