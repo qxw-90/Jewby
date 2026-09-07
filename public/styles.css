@@ -1,0 +1,250 @@
+:root {
+  --ink: #1a1210;
+  --muted: #6b5a52;
+  --paper: #fff8f2;
+  --card: rgba(255, 252, 248, 0.92);
+  --line: rgba(48, 28, 18, 0.12);
+  --accent: #fe2c55;
+  --accent-deep: #c41e3a;
+  --ok: #1f7a4c;
+  --warn: #9a6700;
+  --err: #b42318;
+  --shadow: 0 18px 50px rgba(40, 16, 8, 0.12);
+  --font-display: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --font-body: "Avenir Next", "Segoe UI", "PingFang SC", "Hiragino Sans GB", sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--ink);
+  font-family: var(--font-body);
+  background: #1c100c;
+}
+
+.bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 80% 50% at 20% 0%, rgba(254, 44, 85, 0.35), transparent 55%),
+    radial-gradient(ellipse 70% 45% at 90% 10%, rgba(255, 180, 100, 0.28), transparent 50%),
+    linear-gradient(165deg, #2a1610 0%, #120a08 55%, #1a0e0c 100%);
+}
+
+.shell {
+  position: relative;
+  z-index: 1;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 48px 20px 80px;
+}
+
+.hero {
+  margin-bottom: 28px;
+}
+
+.brand {
+  margin: 0 0 10px;
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #ffb4c0;
+}
+
+.hero h1 {
+  margin: 0 0 12px;
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  line-height: 1.15;
+  color: #fff7f2;
+  font-weight: 600;
+}
+
+.lede {
+  margin: 0;
+  max-width: 42rem;
+  color: rgba(255, 240, 232, 0.78);
+  line-height: 1.55;
+}
+
+.lede code, .hint code {
+  font-size: 0.9em;
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.panel {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 22px 22px 20px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(10px);
+}
+
+.panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.panel-head h2 {
+  margin: 0;
+  font-size: 1.15rem;
+  font-family: var(--font-display);
+}
+
+.hint {
+  margin: 0 0 16px;
+  color: var(--muted);
+  line-height: 1.5;
+  font-size: 0.95rem;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  background: rgba(31, 122, 76, 0.12);
+  color: var(--ok);
+}
+
+.badge.warn {
+  background: rgba(154, 103, 0, 0.14);
+  color: var(--warn);
+}
+
+.badge.err {
+  background: rgba(180, 35, 24, 0.12);
+  color: var(--err);
+}
+
+.badge.muted {
+  background: rgba(0, 0, 0, 0.06);
+  color: var(--muted);
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.btn {
+  appearance: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 18px;
+  border-radius: 12px;
+  font: inherit;
+  font-weight: 600;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.btn:hover { transform: translateY(-1px); }
+.btn:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
+
+.btn.primary {
+  background: linear-gradient(135deg, var(--accent), var(--accent-deep));
+  color: #fff;
+}
+
+.btn.ghost {
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--line);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.field span {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.field input[type="text"],
+.field input[type="file"] {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: #fff;
+  font: inherit;
+}
+
+.msg {
+  margin: 14px 0 0;
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-size: 0.92rem;
+  line-height: 1.45;
+}
+
+.msg.ok {
+  background: rgba(31, 122, 76, 0.1);
+  color: var(--ok);
+}
+
+.msg.err {
+  background: rgba(180, 35, 24, 0.1);
+  color: var(--err);
+}
+
+.status-box {
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+}
+
+.status-box h3 {
+  margin: 0 0 8px;
+  font-size: 1rem;
+}
+
+.tiny {
+  font-size: 0.8rem;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+pre {
+  margin: 0 0 14px;
+  padding: 12px;
+  border-radius: 10px;
+  background: #1a1210;
+  color: #f5e6dc;
+  font-size: 12px;
+  overflow: auto;
+  max-height: 220px;
+}
+
+#publish-summary,
+#status-summary {
+  margin: 0 0 8px;
+  font-weight: 600;
+}
+
+@media (max-width: 560px) {
+  .shell { padding-top: 28px; }
+  .btn { width: 100%; }
+}

@@ -146,3 +146,40 @@ li + li {
   border-color: var(--accent);
   color: #fff;
 }
+
+.hero-card {
+  margin-bottom: 1.25rem;
+}
+
+.eyebrow {
+  margin: 0 0 0.65rem;
+  font-family: "Avenir Next", "Segoe UI", sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.card + .card {
+  margin-top: 1.25rem;
+}
+
+.feature-list,
+.steps {
+  margin: 1rem 0 0;
+  padding-left: 1.2rem;
+  font-family: "Avenir Next", "Segoe UI", sans-serif;
+}
+
+.feature-list li,
+.steps li {
+  margin-top: 0.75rem;
+}
+
+.feature-list strong {
+  display: block;
+  margin-bottom: 0.2rem;
+  font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  color: var(--text);
+}

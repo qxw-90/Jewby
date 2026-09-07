@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Jewby — Publish</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="bg"></div>
+  <main class="shell">
+    <header class="hero">
+      <p class="brand">Jewby</p>
+      <h1>Share culture-inspired product videos</h1>
+      <p class="lede">
+        Sign in with your short-video account, pick a local video, then upload through the
+        Content Posting API.
+      </p>
+    </header>
+
+    <section class="panel" id="auth-panel">
+      <div class="panel-head">
+        <h2>1. Account Login</h2>
+        <span class="badge" id="auth-badge">Checking…</span>
+      </div>
+      <p class="hint">
+        Click the button to open the official authorization page (scan QR / log in).
+        After approval you’ll return here.
+      </p>
+      <div class="row">
+        <a class="btn primary" id="login-btn" href="/api/auth/start">Scan &amp; authorize</a>
+        <button type="button" class="btn ghost" id="refresh-status">Refresh status</button>
+        <button type="button" class="btn ghost" id="token-check">Check upload permission</button>
+      </div>
+      <p class="msg" id="auth-msg" hidden></p>
+      <p class="hint" id="scope-hint"></p>
+    </section>
+
+    <section class="panel" id="publish-panel" hidden>
+      <div class="panel-head">
+        <h2>2. Upload &amp; Publish</h2>
+        <span class="badge muted" id="dry-run-badge"></span>
+      </div>
+      <form id="publish-form">
+        <label class="field">
+          <span>Media file (video or photo)</span>
+          <input type="file" name="media" id="media" accept="video/*,image/*,.mp4,.mov,.webm,.jpg,.jpeg,.png,.webp" required />
+        </label>
+        <label class="field">
+          <span>Caption / title</span>
+          <input type="text" name="caption" id="caption" maxlength="150" placeholder="e.g. Chinese-style phone case for daily life #fyp" />
+        </label>
+        <div class="row">
+          <button type="submit" class="btn primary" id="submit-btn">Upload via Content Posting API</button>
+        </div>
+      </form>
+      <div class="status-box" id="publish-box" hidden>
+        <h3>Upload result</h3>
+        <p id="publish-summary"></p>
+        <pre id="publish-raw"></pre>
+        <h3>Status check</h3>
+        <p id="status-summary"></p>
+        <pre id="status-raw"></pre>
+      </div>
+    </section>
+  </main>
+  <script src="/app.js"></script>
+</body>
+</html>

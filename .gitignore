@@ -1,0 +1,7 @@
+node_modules/
+uploads/
+.agent-data/
+.tiktok-oauth-session.json
+.env
+*.log
+.DS_Store
