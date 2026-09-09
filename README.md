@@ -41,4 +41,4 @@ Rename the GitHub repository to **`jewby`** (URL path must not contain “TikTok
 
 Source files live in the [`docs/`](./docs/) folder.
 
-In the developer portal, set **App name** to `Jewby` and point Website / Terms / Privacy to the URLs above. Contact email on the public pages: `2218209504@qq.com`.
+In the developer portal, set **App name** to `Jewby` and point Website / Terms / Privacy to the URLs above. Contact email on the public pages: `jewby.support@gmail.com`.
