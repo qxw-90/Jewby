@@ -100,6 +100,7 @@ app.get('/api/status', (_req, res) => {
   try {
     const loggedIn = hasValidTokens(PRIMARY_ENV);
     const env = loadCredentialsFromEnv(PRIMARY_ENV);
+    const token = env.TIKTOK_ACCESS_TOKEN || '';
     res.json({
       ok: true,
       logged_in: loggedIn,
@@ -107,6 +108,7 @@ app.get('/api/status', (_req, res) => {
       requested_scopes: resolveScopes(),
       post_mode: env.TIKTOK_POST_MODE || 'DIRECT_POST',
       redirect_uri: REDIRECT_URI,
+      token_tail: token ? token.slice(-8) : '',
       env_files: ENV_PATHS.map((p) => ({
         path: p,
         has_access_token: Boolean(loadCredentialsFromEnv(p).TIKTOK_ACCESS_TOKEN),
@@ -212,6 +214,12 @@ app.get('/api/auth/start', (req, res) => {
 app.get('/callback', async (req, res) => {
   const { code, state, error, error_description: errorDescription } = req.query;
 
+  console.log('[oauth/callback]', {
+    hasCode: Boolean(code),
+    state: state || null,
+    error: error || null,
+  });
+
   if (error) {
     res.redirect(
       `/?auth=error&message=${encodeURIComponent(String(errorDescription || error))}`,
@@ -225,7 +233,10 @@ app.get('/callback', async (req, res) => {
       throw new Error('Missing OAuth session. Please click Login again.');
     }
     if (!code || state !== session.state) {
-      throw new Error('Invalid OAuth callback (missing code or bad state).');
+      throw new Error(
+        'Invalid OAuth callback (missing code or bad state). ' +
+          'Do not click Login twice; close extra auth tabs and try once.',
+      );
     }
 
     const { clientKey, clientSecret } = getAppCredentials();
@@ -242,6 +253,7 @@ app.get('/callback', async (req, res) => {
       accessToken: tokenJson.access_token,
       refreshToken: tokenJson.refresh_token || '',
       expiresIn: tokenJson.expires_in,
+      force: true,
     });
 
     const updated = syncResult.filter((r) => r.changed).length;
@@ -249,15 +261,24 @@ app.get('/callback', async (req, res) => {
     const scopes = grantedScope.split(/[,\s]+/).filter(Boolean);
     const hasPublish = scopes.includes('video.publish');
     const hasUpload = scopes.includes('video.upload');
+    const canUpload = hasUpload || hasPublish;
+
+    console.log('[oauth/callback] success', {
+      open_id: tokenJson.open_id,
+      scope: grantedScope,
+      updated,
+      canUpload,
+    });
 
     res.redirect(
-      `/?auth=success&updated=${updated}&unchanged=${unchanged}` +
+      `/?auth=success` +
         `&open_id=${encodeURIComponent(tokenJson.open_id || '')}` +
         `&scope=${encodeURIComponent(grantedScope)}` +
         `&has_publish=${hasPublish ? '1' : '0'}` +
-        `&has_upload=${hasUpload || hasPublish ? '1' : '0'}`,
+        `&has_upload=${canUpload ? '1' : '0'}`,
     );
   } catch (err) {
+    console.error('[oauth/callback] failed', err);
     res.redirect(
       `/?auth=error&message=${encodeURIComponent(String(err.message || err))}`,
     );

@@ -9,6 +9,9 @@ const publishSummary = document.getElementById('publish-summary');
 const publishRaw = document.getElementById('publish-raw');
 const statusSummary = document.getElementById('status-summary');
 const statusRaw = document.getElementById('status-raw');
+const scopeHint = document.getElementById('scope-hint');
+const statusDetail = document.getElementById('status-detail');
+const loginBtn = document.getElementById('login-btn');
 
 function showAuthMsg(text, ok) {
   authMsg.hidden = false;
@@ -22,20 +25,18 @@ function handleAuthQuery() {
   if (!auth) return;
 
   if (auth === 'success') {
-    const updated = params.get('updated') || '0';
-    const unchanged = params.get('unchanged') || '0';
     const scope = params.get('scope') || '';
     const hasPublish =
       params.get('has_publish') === '1' || params.get('has_upload') === '1';
     if (!hasPublish) {
       showAuthMsg(
         `Signed in, but this authorization is missing video.upload / video.publish (granted: ${scope || 'none'}). ` +
-          `Enable Content Posting API in the developer console, then authorize again.`,
+          `Enable Content Posting API in the Sandbox app, request only enabled scopes, then authorize again.`,
         false,
       );
     } else {
       showAuthMsg(
-        `Signed in. Token synced (updated ${updated} file(s)). Granted scopes: ${scope}`,
+        `Login successful. Granted scopes: ${scope || 'unknown'}`,
         true,
       );
     }
@@ -46,18 +47,19 @@ function handleAuthQuery() {
   window.history.replaceState({}, '', '/');
 }
 
-const scopeHint = document.getElementById('scope-hint');
-
 async function refreshStatus() {
   authBadge.textContent = 'Checking…';
   authBadge.className = 'badge muted';
+  statusDetail.textContent = '';
 
   try {
-    const res = await fetch('/api/status');
+    const res = await fetch('/api/status', { cache: 'no-store' });
     const data = await res.json();
     if (!data.ok) throw new Error(data.error || 'Status check failed');
 
-    scopeHint.textContent = `Requested scopes: ${(data.requested_scopes || []).join(', ')} · post_mode: ${data.post_mode || '-'}`;
+    scopeHint.textContent =
+      `Requested scopes: ${(data.requested_scopes || []).join(', ')} · post_mode: ${data.post_mode || '-'}` +
+      ` · redirect: ${data.redirect_uri || '-'}`;
 
     if (data.logged_in) {
       authBadge.textContent = 'Logged in';
@@ -67,10 +69,20 @@ async function refreshStatus() {
         ? 'Dry-run ON (safe test mode)'
         : 'Live publish enabled';
       dryRunBadge.className = data.dry_run ? 'badge warn' : 'badge';
+      statusDetail.textContent = data.token_tail
+        ? `Access token saved locally (ends with …${data.token_tail}). If Continue does nothing on the auth page, revoke this app in TikTok settings and try again.`
+        : 'Access token saved locally.';
+      if (!authMsg.hidden && authMsg.classList.contains('err')) {
+        /* keep error visible */
+      } else if (authMsg.hidden) {
+        showAuthMsg('Status: logged in. You can upload a video or re-authorize to refresh scopes.', true);
+      }
     } else {
       authBadge.textContent = 'Not logged in';
       authBadge.className = 'badge warn';
       publishPanel.hidden = true;
+      statusDetail.textContent =
+        'No local token found. Click Scan & authorize. If TikTok shows “additional access” with an empty permission list, revoke the app first and confirm Sandbox has video.upload enabled.';
     }
   } catch (err) {
     authBadge.textContent = 'Error';
@@ -79,10 +91,26 @@ async function refreshStatus() {
   }
 }
 
+async function startLogin() {
+  showAuthMsg('Redirecting to TikTok authorization… Use one tab only; you will return here after approval.', true);
+  loginBtn.disabled = true;
+  try {
+    const res = await fetch('/api/auth/start?json=1', { cache: 'no-store' });
+    const data = await res.json();
+    if (!data.ok || !data.auth_url) {
+      throw new Error(data.error || 'Failed to build auth URL');
+    }
+    window.location.assign(data.auth_url);
+  } catch (err) {
+    loginBtn.disabled = false;
+    showAuthMsg(String(err.message || err), false);
+  }
+}
+
 async function checkPublishPermission() {
   showAuthMsg('Checking Content Posting permission…', true);
   try {
-    const res = await fetch('/api/token-check');
+    const res = await fetch('/api/token-check', { cache: 'no-store' });
     const data = await res.json();
     if (data.can_publish) {
       showAuthMsg(data.tip || 'Upload permission OK.', true);
@@ -181,6 +209,7 @@ publishForm.addEventListener('submit', async (event) => {
   }
 });
 
+loginBtn.addEventListener('click', startLogin);
 document.getElementById('refresh-status').addEventListener('click', refreshStatus);
 document.getElementById('token-check').addEventListener('click', checkPublishPermission);
 

@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Jewby — Publish</title>
+  <link rel="icon" href="/brand/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png" />
   <link rel="stylesheet" href="/styles.css" />
 </head>
 <body>
@@ -25,15 +27,16 @@
       </div>
       <p class="hint">
         Click the button to open the official authorization page (scan QR / log in).
-        After approval you’ll return here.
+        After approval you’ll return here. Use only one auth tab — do not click Login twice.
       </p>
       <div class="row">
-        <a class="btn primary" id="login-btn" href="/api/auth/start">Scan &amp; authorize</a>
+        <button type="button" class="btn primary" id="login-btn">Scan &amp; authorize</button>
         <button type="button" class="btn ghost" id="refresh-status">Refresh status</button>
         <button type="button" class="btn ghost" id="token-check">Check upload permission</button>
       </div>
       <p class="msg" id="auth-msg" hidden></p>
       <p class="hint" id="scope-hint"></p>
+      <p class="hint" id="status-detail"></p>
     </section>
 
     <section class="panel" id="publish-panel" hidden>

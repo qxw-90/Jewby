@@ -52,10 +52,50 @@ a:hover {
 }
 
 .brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
   font-weight: 700;
   letter-spacing: 0.02em;
   color: var(--text);
   text-decoration: none;
+}
+
+.brand-mark {
+  width: 36px;
+  height: 36px;
+  border-radius: 9px;
+  display: block;
+  flex-shrink: 0;
+}
+
+.brand-lockup {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.brand-lockup img {
+  width: 72px;
+  height: 72px;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(40, 25, 15, 0.08);
+}
+
+.product-shot {
+  margin-top: 1.5rem;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+  background: #fff8f2;
+}
+
+.product-shot img {
+  display: block;
+  width: min(280px, 100%);
+  margin: 1.25rem auto;
+  border-radius: 20px;
 }
 
 .nav-links {

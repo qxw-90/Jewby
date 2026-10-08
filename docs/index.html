@@ -5,14 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Jewby — Culture-inspired product publishing</title>
   <meta name="description" content="Jewby helps creators share culture-inspired product videos and review publishing results." />
+  <link rel="icon" href="./favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon-16.png" />
+  <link rel="apple-touch-icon" href="./assets/jewby-icon-192.png" />
   <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
   <main class="wrap">
     <nav class="nav" aria-label="Primary">
-      <a class="brand" href="./index.html">Jewby</a>
+      <a class="brand" href="./index.html">
+        <img class="brand-mark" src="./assets/jewby-icon-192.png" width="36" height="36" alt="Jewby app icon" />
+        Jewby
+      </a>
       <div class="nav-links">
         <a href="#features">Features</a>
+        <a href="#product">Product</a>
         <a href="#how-it-works">How it works</a>
         <a href="./terms.html">Terms of Service</a>
         <a href="./privacy.html">Privacy Policy</a>
@@ -20,8 +28,13 @@
     </nav>
 
     <section class="card hero-card">
-      <p class="eyebrow">Jewby</p>
-      <h1>Share culture-inspired products with your audience</h1>
+      <div class="brand-lockup">
+        <img src="./assets/jewby-icon-512.png" width="72" height="72" alt="Jewby" />
+        <div>
+          <p class="eyebrow">Jewby</p>
+          <h1>Share culture-inspired products with your audience</h1>
+        </div>
+      </div>
       <p class="lead">
         Jewby is a desktop publishing tool for creators and small brands that sell everyday items
         inspired by traditional Chinese culture—such as Chinese-style phone cases and Zhuang brocade
@@ -52,6 +65,20 @@
           Track whether an upload succeeded so you can review results before continuing your content work.
         </li>
       </ul>
+    </section>
+
+    <section class="card" id="product">
+      <h2>The Jewby desktop app</h2>
+      <p>
+        Jewby runs as a local desktop web app. Creators authorize once, then upload product videos
+        from a folder on their computer and review upload results in the same interface.
+      </p>
+      <div class="product-shot">
+        <img src="./assets/jewby-icon-512.png" width="280" height="280" alt="Jewby application icon" />
+      </div>
+      <p class="footer">
+        The Jewby app icon above is the same mark used in Basic Info and as this site’s favicon.
+      </p>
     </section>
 
     <section class="card" id="audience">
